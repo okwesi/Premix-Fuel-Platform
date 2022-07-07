@@ -1,0 +1,106 @@
+{% extends "header.html" %}
+
+{% block content %}
+<h2>Seller Orders {{order.order_id}}</h2>
+
+  <div class="container col-lg-6 mb-3 mt-5">
+    <div class=" text-center p-3" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+      <h6 class="mt-5">Order Detail</h6>
+      <div class="card  mb-5">
+        <table class="table table-sm align-middle mb-0 bg-white">
+          <tbody>
+            <tr>
+              <td>
+                <p class="text-muted mb-0">Order ID</p>
+              </td>
+              <td>
+                <p class="fw-normal mb-1">{{order.order_id}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="text-muted mb-0">Quantity</p>
+              </td>
+              <td>
+                <p class="fw-normal mb-1">{{order.quantity}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="text-muted mb-0">Amount</p>
+              </td>
+              <td>
+                <p class="fw-normal mb-1">{{order.price}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="text-muted mb-0">Delivered</p>
+              </td>
+              <td>
+                <p class="fw-normal mb-1">{{order.delivered}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="text-muted mb-0">Order Time</p>
+              </td>
+              <td>
+                <p class="fw-normal mb-1">{{order.ordered_time}}</p>
+              </td>
+            </tr>
+  
+          </tbody>
+        </table>
+      </div>
+      <h6>Buyer Detail</h6>
+      <div class="card mb-3" style="max-width: 540px; ">
+        <div class="row">
+          <div class="col-5">
+            <img src="{{order.customer.profile_picture.url}}" alt="Username"
+              class="img-fluid rounded-start" />
+          </div>
+          <div class="col-7">
+            <div class="card-body">
+              <h5 class="card-title">{{order.customer.user.first_name}} {{order.customer.user.last_name}}</h5>
+              <p class="card-text">
+                User ID
+              </p>
+              <p class="card-text">
+                <small class="text-muted"></small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Button trigger modal -->
+      {% if not order.delivered %}        
+      <button type="button" class="btn btn-dark btn-block m-4 col-7 rounded-pill" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">
+        Delivered?
+      </button>
+      {% endif %}
+    </div>
+
+
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delivered Fuel</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">Are you sure?</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">No</button>
+          <a href="{% url 'delivered' order.order_id %}" class="btn btn-success">Yes</a>
+        </div>
+      </div>
+    </div>
+     
+    {% endblock content %}

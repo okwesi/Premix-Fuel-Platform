@@ -1,0 +1,58 @@
+{% extends "header.html" %}
+
+{% block style %}
+
+{% endblock style %}
+
+{% block title %}
+Register Buyer
+{% endblock title %}
+
+
+{% block content %}
+<div class="container col-lg-6 mb-3 mt-5">
+  <div class=" text-center p-3" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+
+    <form method="Post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form}}
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-dark btn-block m-4 col-7 rounded-pill m-auto">Register</button>
+    </form>
+    <!-- <video id="webcam" autoplay playsinline width="640" height="480"></video>
+<canvas id="canvas" class="d-none"></canvas>
+<audio id="snapSound" src="audio/snap.wav" preload = "auto"></audio> -->
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block script %}
+
+<script>
+  customer_id = document.getElementById("id_username")
+  customer_id.value = "{{customer_id}}"
+</script>
+
+<!-- <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+<script>
+const webcamElement = document.getElementById('webcam');
+const canvasElement = document.getElementById('canvas');
+const snapSoundElement = document.getElementById('snapSound');
+const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
+webcam.start()
+   .then(result =>{
+      console.log("webcam started");
+   })
+   .catch(err => {
+       console.log(err);
+   });
+   let picture = webcam.snap();
+document.querySelector('#download-photo').href = picture;
+$('#cameraFlip').click(function() {
+    webcam.flip();
+    webcam.start();  
+});
+</script> -->
+{% endblock script %}

@@ -1,0 +1,128 @@
+{% extends "header.html" %}
+
+{% block title %}
+{{station.name}}
+{% endblock title %}
+
+{% block style %}
+<style>
+    .img {
+        width: 250px;
+        height: 250px;
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+{% if user.is_superuser %}
+  
+<a href="{% url 'update-station' station.id %}" class="btn btn-dark rounded-pill   col-3" >
+  Update Station
+</a>
+{% endif %}
+<div class="container col-lg-10 mb-3">
+    <div class="row">
+        <div class="bg-image hover-overlay ripple col-lg-4" data-mdb-ripple-color="light">
+            <img src="{{station.seller.profile_picture.url}}" class="img-fluid img" />
+        </div>
+        <div class=" text-center col-lg-8" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                 
+                      <tr>
+                        <td >Name:</td>
+                        <td ><b>{{station.name}}</b></td>
+                      </tr>
+                      <tr>
+                        <td >Quantity:</td>
+                        <td ><b>{{station.quantity}}</b></td>
+                      </tr>
+                      <tr>
+                        <td >Address:</td>
+                        <td ><b>{{station.address}}</b></td>
+                      </tr>
+                      <tr>
+                        <td >Code:</td>
+                        <td ><b>{{station.seller.user.username}}</b></td>
+                      </tr>
+                      <tr>
+                        <td >Attendant:</td>
+                        <td ><b>{{station.seller.user.first_name}} {{station.seller.user.last_name}}</b></td>
+                      </tr>
+                      <tr>
+                        <td >Email:</td>
+                        <td ><b>{{station.seller.user.email}}</b></td>
+                      </tr>
+                      <tr>
+                        <td >Phone:</td>
+                        <td ><b>{{station.phone}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <div id='map'></div>
+
+            <div>
+              
+                <!-- <h3 class="text-center">Orders</h3>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                      </tr>
+                      
+                    </tbody>
+                  </table> -->
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+  #map {
+    width: 100%;
+    height: 300px;
+  }
+</style>
+{% endblock content %}
+
+
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+  lat = "{{station.geolocation_latitude}}"
+  long = "{{station.geolocation_longitude}}"
+  station = "{{station.name}}"
+  quantity = "{{station.quantity}}"
+  console.log(lat , long)
+
+  mapboxgl.accessToken = 'pk.eyJ1IjoiZGphbmdvdGVzdDQ1IiwiYSI6ImNsMnNja3J0ejA1YXYzY2xtdnBjbW5qYXIifQ.PS1zPRb01DPmyA1B4ca5Ug';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    center: [long, lat],
+    zoom: 16
+  });
+  map.addControl(new mapboxgl.NavigationControl());
+  var popup = new mapboxgl.Popup()
+  .setHTML(`Station: ${station}  Qty: ${quantity}` )
+  .addTo(map)
+  const marker = new mapboxgl.Marker({ "color": "#b40219" })
+    .setLngLat([long, lat])
+    .addTo(map)
+    .setPopup(popup);
+  
+
+
+</script>
+{% endblock script %}

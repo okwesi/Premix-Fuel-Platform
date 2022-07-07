@@ -1,0 +1,102 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<div class="container">
+
+
+  <!-- price Card -->
+  <div class="card p-2">
+    <div class="row">
+      <div class="col-8">Premix Fuel Price</div>
+      <div class="col-4">Gh₵<b style='color:green' id="price">{{price.price}}</b> &#8593; </div>
+    </div>
+  </div>
+</div>
+
+<div class="container col-lg-6 mb-3 mt-5">
+  <div class=" text-center p-3" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+
+
+    <!-- 2 column grid layout with text inputs for the first and last names -->
+    <table class="table align-middle mb-0 bg-white">
+      <tbody>
+        <tr>
+          <td>
+            <p class="text-muted mb-0">Order ID</p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{order.order_id}}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p class="text-muted mb-0">Quantity</p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{order.quantity}} gallons</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p class="text-muted mb-0">Price</p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{order.price}}</p>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <div class="card mb-3">
+      <div class="row">
+        <div class="col-5">
+          <img src="{{order.station.seller.profile_picture.url}}" style="height: 100%;" alt="{{order.station.name}}"
+            class="img-fluid rounded-start">
+    
+        </div>
+        <div class="col-7">
+          <div class="card-body">
+            <h5 class="card-title">{{order.station.name}}</h5>
+            <p class="card-text">
+              {{order.station.address}}
+            </p>
+            <p class="card-text">
+              {{order.station.seller.user.username}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkbox -->
+    <p>
+      <input type="checkbox">
+      <a class="text-primary" href="">I agree to the terms of agreement.</a>
+      
+    </p>
+    <!-- Submit button -->
+    <form method="post">
+      {% csrf_token %}
+      <a href="{% url 'paid' order.order_id %}"  class="btn btn-dark btn-block m-4 col-7 rounded-pill">Pay</a>
+    </form>
+  </div>
+  </div>
+</div>
+{% endblock content %}
+{% block script %}
+<!-- <script>
+  setTimeout("location.href = 'https://www.quackit.com';",1500);
+</script> -->
+<script type="text/javascript">
+  var qty = document.getElementById('id_quantity');
+  var price = document.getElementById('id_price');
+  var oil_price = document.getElementById('price').innerText;
+  qty.addEventListener('input', function () {
+    calculator = this.value * oil_price
+    price.value = "Gh₵ " + calculator;
+  });
+</script>
+
+
+{% endblock script %}

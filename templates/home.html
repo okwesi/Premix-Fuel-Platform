@@ -1,0 +1,177 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<main role="main">
+
+    <div id="myCarousel" class="carousel slide mb-5" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+            <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+            <li data-target="#myCarousel" data-slide-to="2" class="active"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="first-slide img-fluid" style="height: 500px; width: 100%; opacity: 0.5"
+                    src="https://media.istockphoto.com/photos/african-american-businessman-extending-hand-to-shake-picture-id1165078466?k=20&m=1165078466&s=612x612&w=0&h=Q_Q6QQt2raU1Gqu10SE6Lksukm-k4LbT3bhdZqQcKDA="
+                    alt="First slide">
+                <div class="container">
+                    <div class="carousel-caption text-left text-dark">
+                        {% if user.is_authenticated %}
+                        <h1>Welcome {{user.first_name | title}} {{user.last_name|title}}.</h1>
+                        <h3>{{user.groups.all.0.name | title}}'s Account</h3>
+                        {% else%}
+                        <h1>Welcome</h1>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
+                            gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Join up today</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="second-slide" style="height: 500px; width: 100%;"
+                    src="https://www.mofad.gov.gh/wp-content/uploads/2018/06/MERFO--747x500.jpg" alt="Second slide">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Ensure Regular Checking of Water Quality, Ohene Marfo Advises Fish Farmers.</h1>
+                        <p>A Fisheries Officer, Emmanuel Ohene Marfo has urged Fish Farmers to routinely check on their
+                            water temperature, salinity, oxygen and PH in their quest to reduce fish mortality rate</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item ">
+                <img class="third-slide" style="height: 500px; width: 100%;"
+                    src="https://www.mofad.gov.gh/wp-content/uploads/2022/03/rsz_1rsz_screenshot_8.png"
+                    alt="Third slide">
+                <div class="container">
+                    <div class="carousel-caption text-right">
+                        <h1>LAUNCHING OF THE OACPS
+                        </h1>
+                        <p>AT THE ACCRA INTERNATIONAL CONFERENCE CENTER
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+            <div class="col-lg-4">
+                <img class="rounded-" src="https://www.mofad.gov.gh/wp-content/uploads/2022/03/Mofad-Min.jpg"
+                    alt="Generic placeholder image" width="240" height="240">
+                <h5>HON. MRS. MAVIS HAWA KOOMSON</h5>
+                <p>MINISTER FOR FISHERIES AND AQUACULTURE DEVELOPMENT</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="rounded-" src="https://www.mofad.gov.gh/wp-content/uploads/2022/02/Dep-Min.jpg"
+                    alt="Generic placeholder image" width="240" height="240">
+                <h5>HON. MOSES ANIM</h5>
+                <p>Deputy Minister for Fisheries and Aquaculture Development (MoFAD)</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="rounded-" src="https://www.mofad.gov.gh/wp-content/uploads/2018/06/rsz_armo_1.jpg"
+                    alt="Generic placeholder image" width="240" height="240">
+                <h5>KWESI ARMO-HIMBSON</h5>
+                <p>CHIEF DIRECTOR </p>
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+
+
+        <!-- START THE FEATURETTES -->
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Addressing Challenges in Premix Fuel</h2>
+                <p class="lead text-justify">Government subsidized the product to make it cheap and accessible to artisanal fishermen
+                    in the coastal and lake regions of the country.
+
+                    Majority of Ghanaians who live along the coast are fishermen and engage in the fishing business,
+                    therefore, depriving them of the premix fuel is as good as starving them and their dependents.
+
+                    Ever since the product was introduced into the fishing industry, its distribution has always been
+                    fraught with issues of corruption, diversions and smuggling to neighbouring destinations, which
+                    defeated the rationale of the subsidy and made the commodity costly to fishermen.
+                <a href="https://newsghana.com.gh/addressing-challenges-in-premix-smuggling-perspectives-from-stakeholders/">Read More...</a></p>
+            </div>
+            <div class="col-md-5">
+                <div class="ratio ratio-16x9">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/BRU8mMiAIAE"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading">PREMIX FUEL DISTIBUTION TO GO DIGITAL
+                </h2>
+                <p class="lead text-justify">Vice President Dr Mahamudu Bawumia has noted that premix fuel meant for
+                    fishermen are being diverted to retailers by unscrupulous persons as a result of the heavy subsidies
+                    on the fuel.
+                    Dr Bawumia said the issue of premix fuel diversions has been a major concern to the government over
+                    the years.
+                    He has therefore asked the Minister of Fisheries and Aquaculture, Mavis Hawa Koomson to deal with
+                    the issue immediately.
+                    <a
+                        href="https://www.ghanaweb.com/GhanaHomePage/business/Heavy-subsidies-on-premix-fuel-an-incentive-for-diversion-Bawumia-1226149">
+                        Read More ....
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-5 order-md-1">
+                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500"
+                    style="width: 500px; height: 400px;"
+                    src="https://cdn.ghanaweb.com/imagelib/pics/337/33796087.295.jpg" data-holder-rendered="true">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
+                    euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
+                    tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500"
+                    style="width: 500px; height: 400px;"
+                    src="https://energynewsafrica.com/wp-content/uploads/2019/11/prar.png" data-holder-rendered="true">
+            </div>
+        </div>
+
+
+        <!-- /END THE FEATURETTES -->
+
+    </div><!-- /.container -->
+
+
+
+</main>
+
+{% endblock content %}

@@ -1,0 +1,74 @@
+{% extends "header.html" %}
+
+{% block title %}
+{{station.name}}
+{% endblock title %}
+
+{% block style %}
+<style>
+    .img {
+        width: 250px;
+        height: 250px;
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+<a href="{% url 'update-customer' customer.id %}" class="btn btn-dark rounded-pill   col-3" >
+    Update Customer
+  </a>
+<div class="container col-lg-10 mb-3">
+    <div class="row">
+        <div class="bg-image hover-overlay ripple col-lg-4" data-mdb-ripple-color="light">
+            <img src="{{customer.customer.profile_picture.url}}" class="img-fluid img" />
+        </div>
+        <div class=" text-center col-lg-8" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                 
+                      <tr>
+                        <td >Name:</td>
+                        <td ><b>{{customer.first_name}} {{customer.last_name}}</b></td>
+                      </tr>
+                      <tr>
+                        <td >Email:</td>
+                        <td ><b>{{customer.email}}</b></td>
+                      </tr>
+                      <tr>
+                        <td >Phone:</td>
+                        <td ><b>{{customer.customer.phone}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <div>
+                <!-- <h3 class="text-center">Orders</h3>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                      </tr>
+                      
+                    </tbody>
+                  </table> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+
+{% endblock script %}

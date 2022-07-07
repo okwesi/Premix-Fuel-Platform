@@ -1,0 +1,91 @@
+{% extends "header.html" %}
+
+
+
+{% block content %}
+
+<h2>Customer Orders</h2>
+
+<div class="container col-lg-6">
+  <div class="input-group">
+    <!-- <input type="search" id="search-input" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" /> -->
+    <!-- <button type="button" id="search-button" class="btn btn-outline-primary">search</button> -->
+  </div>
+</div>
+
+<div class="container col-lg-6 mb-3 mt-5">
+  <!-- card body starts here -->
+  {% for order in orders %}
+    
+  <div class=" text-center" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+    <div class="card ">
+      <table class="table table-sm align-middle mb-0 bg-white">
+        <tbody>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Order ID</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.order_id}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Quantity</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.quantity}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Amount</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.price}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Delivered</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.delivered}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Received</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.received}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Order Time</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.ordered_time}}</p>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <a href="{% url 'customer-order-detail' order.order_id %}" class="stretched-link"></a>
+    </div>
+
+  </div>
+  {% endfor %}
+  <!-- end here -->
+</div>
+{% endblock content %}
+
+<script type="text/javascript">
+  const searchButton = document.getElementById('search-button');
+  const searchInput = document.getElementById('search-input');
+  searchButton.addEventListener('click', () => {
+    const inputValue = searchInput.value;
+    alert(inputValue);
+  });
+</script>

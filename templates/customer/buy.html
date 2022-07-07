@@ -1,0 +1,87 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<div class="container">
+
+
+  <!-- price Card -->
+  <div class="card p-2">
+    <div class="row">
+      <div class="col-8">Premix Fuel Price</div>
+      <div class="col-4">Gh₵<b style='color:green' id="price">{{price.price}}</b> &#8593; </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container col-lg-6 mb-3 mt-5">
+  <div class=" text-center p-3" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+
+    <form method="post">
+      {% csrf_token %}
+      <!-- 2 column grid layout with text inputs for the first and last names -->
+      <div class="row mb-4 align-items-center">
+        <div class="col">
+          <div class="form-outline">
+            {{order_form.quantity}}
+            <label class="form-label" for="form3Example1">Quantity</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-outline disabled">
+            {{order_form.price}}
+            <label class="form-label" for="form3Example2">Price</label>
+          </div>
+        </div>
+      </div>
+      {{order_form.station}}
+      <div class="card mb-3">
+        <div class="row">
+          <div class="col-5">
+            <img src="{{station.seller.profile_picture.url}}" style="height: 100%;" alt="Trendy Pants and Shoes" class="img-fluid rounded-start">
+          </div>
+          <div class="col-7">
+            <div class="card-body">
+              <h5 class="card-title">{{station.name}}</h5>
+              <p class="card-text">
+                {{station.address}}
+              </p>
+              <p class="card-text">
+                Gallons: {{station.quantity}}
+              </p>
+              <p class="card-text">
+                {{station.seller.user.username}}
+              </p>
+            </div>
+            <a href="{% url 'station-detail' station.id %}" class="stretched-link"></a>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-dark btn-block m-4 col-7 rounded-pill">Buy</button>
+
+
+    </form>
+  </div>
+</div>
+{% endblock content %}
+{% block script %}
+<!-- <script>
+  setTimeout("location.href = 'https://www.quackit.com';",1500);
+</script> -->
+<script type="text/javascript">
+  var qty = document.getElementById('id_quantity');
+  var price = document.getElementById('id_price');
+  var oil_price = document.getElementById('price').innerText;
+  qty.addEventListener('input', function () {
+    calculator = this.value * oil_price
+    price.value = "Gh₵ " + calculator;
+  });
+</script>
+
+
+{% endblock script %}

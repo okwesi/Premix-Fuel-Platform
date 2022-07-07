@@ -1,0 +1,13 @@
+{% autoescape off %}  
+Hi {{ user.librarian.full_name }},
+
+    here is your email
+    
+    username : {{username}}
+    email: {{user.email}}
+   password:  {{user_password}}
+    group: {{user_group}}
+Please click on the link to confirm your registration,  
+
+use this link to log into your account and login with the email and password  
+{% endautoescape %}

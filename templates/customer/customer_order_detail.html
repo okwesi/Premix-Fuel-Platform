@@ -1,0 +1,123 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<div class="container">
+<h2>Customer Order {{order.order_id}}</h2>
+  <!-- price Card -->
+  <div class="card p-2">
+    <div class="row">
+      <div class="col-8">Premix Fuel Price</div>
+      <div class="col-4">Gh₵ <b style='color:green' id="price">{{price.price}}</b> &#8593; </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container col-lg-6 mb-3 mt-5">
+  <div class=" text-center p-3" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+
+
+    <!-- 2 column grid layout with text inputs for  the first and last names -->
+    <div class="card mb-3">
+    <table class="table table-sm align-middle mb-0 bg-white">
+        <tbody>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Order ID</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.order_id}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Quantity</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.quantity}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Amount</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.price}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Delivered</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.delivered}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Order Time</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.ordered_time}}</p>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+</div>
+    <div class="card mt-3 mb-3">
+      <div class="row">
+        <div class="col-5">
+          <img src="{{order.station.seller.profile_picture.url}}" style="height: 100%;" alt="{{order.station.name}}"
+            class="img-fluid rounded-start">
+    
+        </div>
+        <div class="col-7">
+          <div class="card-body">
+            <h5 class="card-title">{{order.station.name}}</h5>
+            <p class="card-text">
+              {{order.station.address}}
+            </p>
+            <p class="card-text">
+              {{order.station.seller.user.username}}
+            </p>
+          </div>
+          <a href="{% url 'station-detail' order.station.id %}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkbox -->
+    {% if order.delivered %}
+      {% if not order.received %}
+        
+      <button type="button" class="btn btn-dark btn-block m-4 col-7 rounded-pill" data-bs-toggle="modal"
+      data-bs-target="#exampleModal">
+      Received?
+    </button>
+      {% endif %}
+    {% endif %}
+    <!-- Submit button -->
+  </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Recieved Fuel</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">Are you sure?</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">No</button>
+          <a href="{% url 'received' order.order_id %}" class="btn btn-success">Yes</a>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}
