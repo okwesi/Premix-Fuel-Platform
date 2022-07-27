@@ -43,9 +43,7 @@ INSTALLED_APPS = [
     'stations',
     
     'allauth',
-    'corsheaders',
-
-    
+    'corsheaders',    
 ]
 
 MIDDLEWARE = [
