@@ -19,7 +19,7 @@
             </tr>
             <tr>
               <td>
-                <p class="text-muted mb-0">Quantity</p>
+                <p class="text-muted mb-0">quantity</p>
               </td>
               <td>
                 <p class="fw-normal mb-1">{{order.quantity}}</p>
@@ -54,17 +54,19 @@
         </table>
       </div>
       <h6>Buyer Detail</h6>
-      <div class="card mb-3" style="max-width: 540px; ">
+      <div class="card mb-3" style="max-width: 800px; ">
         <div class="row">
-          <div class="col-5">
+          <div class="col-4">
             <img src="{{order.customer.profile_picture.url}}" alt="Username"
-              class="img-fluid rounded-start" />
+              class="rounded-start" height="200" width="200"/>
           </div>
-          <div class="col-7">
-            <div class="card-body">
-              <h5 class="card-title">{{order.customer.user.first_name}} {{order.customer.user.last_name}}</h5>
+          <div class="col-8">
+            <div class="card-body text-start">
+              <h5 class="card-title">Username : {{order.customer.user.username}}</h5>
+              <h6 class="card-title">Customer Name: {{order.customer.user.first_name}} {{order.customer.user.last_name}}</h6>
+              <h6 class="card-title">Customer Email: {{order.customer.user.email}} </h6>
               <p class="card-text">
-                User ID
+                Phone: {{order.customer.phone}}
               </p>
               <p class="card-text">
                 <small class="text-muted"></small>

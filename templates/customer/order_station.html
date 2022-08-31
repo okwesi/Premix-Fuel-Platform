@@ -3,46 +3,56 @@
 
 {% block content %}
 
-      <div class="container col-lg-8">
+<div class="container col-lg-8">
 
 
-      <!-- price Card -->
-      <div class="">
-        <div class="card p-2 mt-2 mb-2">
-          <div class="row">
-             <div class="col-8">Premix Fuel Price</div>
-             <div class="col-4">GH₵ <b style='color:green'>{{price.price}}</b> &#8593; </div>
-           </div>
-               </div>
+  <!-- price Card -->
+  <div class="row ">
+      <div class="mt-4 mb-4 card col-lg-5">
+        <div class="row">
+          <div class="col-7">Premix Fuel Price</div>
+          <div class="col-5">GH₵ <b style='color:green'>{{price.price}}</b></div>
         </div>
+      </div>
+      <form class="d-flex mt-4 mb-4 col-lg-6 justify-content-center" method=" get">
+        <input name="search" value="{{request.GET.search}}" class="form-control  me-2" type="search"
+          placeholder="Search" aria-label="Search">
+        <button class="btn btn-dark" type="submit">Search</button>
 
-        {% for station in stations  %}
-      
-        <div class="card mb-3">
-          <div class="row">
-            <div class="col-5">
-              <img src="{{station.seller.profile_picture.url}}" style="height: 100%;" alt="Trendy Pants and Shoes" class="img-fluid rounded-start">
-            </div>
-            <div class="col-7">
-              <div class="card-body">
-                <h5 class="card-title">{{station.name}}</h5>
-                <p class="card-text">
-                  {{station.address}}
-                </p>
-                <p class="card-text">
-                  {{station.seller.user.username}}
-                </p>
-              </div>
-              <a href="{% url 'order-oil' station.id %}" class="stretched-link"></a>
-            </div>
-          </div>
+      </form>
+    </div>
+
+  {% for station in stations %}
+
+  <div class="card mb-3" style="max-width: 700px; ">
+    <div class="row">
+      <div class="col-5">
+        <img src="{{station.seller.profile_picture.url}}" class="rounded-start" width="200" height="200" />
+      </div>
+      <div class="col-7">
+        <div class="card-body">
+          <h5 class="card-title">Station Name: {{station.name}}</h5>
+          <p class="card-text">
+            Address: {{station.address}}
+          </p>
+          <p class="card-text">
+            <small class="text-muted">Operator Name: {{station.seller.user.first_name|title}}
+              {{station.seller.user.last_name|title}}</small>
+          </p>
         </div>
-            
-        {% endfor %}
+      </div>
+    </div>
+    <a href="{% url 'order-oil' station.id %}" class="btn btn-dark">Proceed</a>
+    <!-- <a href="" class="stretched-link"></a> -->
+
+  </div>
+
+
+  {% endfor %}
 
 
 
-<!-- <a href="" class="btn btn-primary mt-4 col-8 rounded-pill " tabindex="-1" role="button" aria-disabled="true">Primary link</a> -->
+  <!-- <a href="" class="btn btn-primary mt-4 col-8 rounded-pill " tabindex="-1" role="button" aria-disabled="true">Primary link</a> -->
 </div>
 {% endblock content %}
 

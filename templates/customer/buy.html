@@ -23,46 +23,47 @@
       <!-- 2 column grid layout with text inputs for the first and last names -->
       <div class="row mb-4 align-items-center">
         <div class="col">
-          <div class="form-outline">
+          <div class="input-group">
+            <div class="input-group-text">Quantity</div>
             {{order_form.quantity}}
-            <label class="form-label" for="form3Example1">Quantity</label>
           </div>
         </div>
         <div class="col">
-          <div class="form-outline disabled">
+          <div class="input-group">
+            <div class="input-group-text">Gh₵</div>
             {{order_form.price}}
-            <label class="form-label" for="form3Example2">Price</label>
           </div>
         </div>
       </div>
-      {{order_form.station}}
-      <div class="card mb-3">
+
+      <!-- {{order_form.station}} -->
+      <div class="card mb-3" style="max-width: 700px; ">
         <div class="row">
           <div class="col-5">
-            <img src="{{station.seller.profile_picture.url}}" style="height: 100%;" alt="Trendy Pants and Shoes" class="img-fluid rounded-start">
+            <img src="{{station.seller.profile_picture.url}}" class="rounded-start" width="200" height="200" />
           </div>
           <div class="col-7">
             <div class="card-body">
-              <h5 class="card-title">{{station.name}}</h5>
+              <h5 class="card-title">Station Name: {{station.name}}</h5>
               <p class="card-text">
-                {{station.address}}
+                Address: {{station.address}}
               </p>
               <p class="card-text">
-                Gallons: {{station.quantity}}
-              </p>
-              <p class="card-text">
-                {{station.seller.user.username}}
+                <small class="text-muted">Operator Name: {{station.seller.user.first_name|title}}
+                  {{station.seller.user.last_name|title}}</small>
               </p>
             </div>
-            <a href="{% url 'station-detail' station.id %}" class="stretched-link"></a>
           </div>
         </div>
+        <a href="{% url 'station-detail' station.id station.name%}" class="btn btn-secondary">View Station</a>
+        <!-- <a href="" class="stretched-link"></a> -->
+
       </div>
 
-      
+
 
       <!-- Submit button -->
-      <button type="submit" class="btn btn-dark btn-block m-4 col-7 rounded-pill">Buy</button>
+      <button type="submit" class="btn btn-dark btn-block mt-4 col-7 mx-auto rounded-pill">Buy</button>
 
 
     </form>
@@ -76,10 +77,10 @@
 <script type="text/javascript">
   var qty = document.getElementById('id_quantity');
   var price = document.getElementById('id_price');
-  var oil_price = document.getElementById('price').innerText;
+  var oil_price = parseInt("{{price.price}}")
   qty.addEventListener('input', function () {
     calculator = this.value * oil_price
-    price.value = "Gh₵ " + calculator;
+    price.value = calculator;
   });
 </script>
 

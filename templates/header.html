@@ -7,25 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
-    
+
     <!-- Bootstrap CSS -->
-   <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Miss+Fajardose&family=Parisienne&family=Poppins:wght@300;500&family=The+Nautigal:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-       
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Miss+Fajardose&family=Parisienne&family=Poppins:wght@300;500&family=The+Nautigal:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
 
     <title>{% block title %}
 
         {% endblock title %}</title>
 
-        
+
     {% block style %}
 
     {% endblock style %}
@@ -33,22 +37,28 @@
 </head>
 
 <body style="font-family: 'Poppins', sans-serif;">
-    <header class="py-3 mb-1 border-bottom">
-        <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
-            <div class="col-4">
-                <a class="navbar-brand" href="#">
-                    <img src="https://www.premixgroup.com/wp-content/uploads/2019/04/Premix-Logo-black-jpg-769-KB.jpg"
-                        alt="..." height="30" width="100">
-                </a>
-            </div>
 
-            <div class="d-flex align-items-center">
-                <ul class="nav col-lg-10 col-9 col-md-auto mb-2  mb-md-0">
+    <!-- ?next={{ request.path }} -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid ">
+            <a class="navbar-brand" href="#">
+                <img src="https://www.premixgroup.com/wp-content/uploads/2019/04/Premix-Logo-black-jpg-769-KB.jpg"
+                    alt="..." height="30" width="100">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+
+
+                <ul class="nav col-lg-10
+                 col-9 col-md-auto mb-2  mb-md-0 d-flex align-items-center justify-content-center ">
                     <li><a href="{% url 'home' %}" class="nav-link px-2 link-dark">Home</a></li>
                     {% if user.is_authenticated %}
                     {% if user.is_superuser %}
                     <li><a href="{% url 'admin-dashboard' %}" class="nav-link px-2 link-dark">Dashboard</a></li>
-                    
+
                     {% endif %}
                     {% if user.groups.all.0.name == 'customer' %}
                     <li><a href="{% url 'order-station' %}" class="nav-link px-2 link-dark">Order</a></li>
@@ -57,9 +67,10 @@
                     {% endif %}
                     {% endif %}
                     <li><a href="{% url 'contact' %}" class="nav-link px-2 link-dark">Contact Us</a></li>
-                    
+                    <li><a href="{% url 'join' %}" class="nav-link px-2 link-dark">Join Us</a></li>
+
                 </ul>
-                
+
                 {% if user.is_authenticated %}
                 {% if user.is_superuser %}
                 <div class="flex-shrink-0 dropdown d-grid gap-2 d-md-flex justify-content-md-end">
@@ -90,7 +101,7 @@
                     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                         <li> {{user.username}}</li>
                         <li><a class="dropdown-item" href="{% url 'customer-orders' %}">Orders</a></li>
-                         <li><a  class="dropdown-item" href="{% url 'password_change' %}">Settings</a></li>
+                        <li><a class="dropdown-item" href="{% url 'password_change' %}">Settings</a></li>
                         <!--<li><a class="dropdown-item" href="#">Profile</a></li> -->
                         <li>
                             <hr class="dropdown-divider">
@@ -108,8 +119,9 @@
                     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                         <li> {{user.username}}</li>
                         <li><a class="dropdown-item" href="{% url 'seller-orders' %}">Orders</a></li>
-                        <li><a href="{% url 'station-detail' user.seller.station.id %}" class="nav-link px-2 link-dark">Details</a></li>
-                         <li><a class="dropdown-item" href="{% url 'password_change' %}">Settings</a></li>
+                        <li><a href="{% url 'station-detail' user.seller.station.id   user.seller.station.name%}"
+                                class="nav-link px-2 link-dark">Details</a></li>
+                        <li><a class="dropdown-item" href="{% url 'password_change' %}">Settings</a></li>
                         <!--<li><a class="dropdown-item" href="#">Profile</a></li> -->
                         <li>
                             <hr class="dropdown-divider">
@@ -127,18 +139,19 @@
                 <!-- ?next={{ request.path }} -->
             </div>
         </div>
-    </header>
-
+    </nav>
     <!-- /container -->
     <div class="">
         {% block content %}
         {% endblock content %}
-        
+
     </div>
+    <script>
+        var a = document.getElementById('dashboard');
+        a.href = `${location.origin}/admin`;
+        console.log(location.origin);
+    </script>
     {% block script %}
-        <script>
-            var a = document.getElementById('dashboard');
-            a.href = `${location.origin}/admin`;        </script>
     {% endblock script %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -153,7 +166,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-        
-           </body>
+
+</body>
 
 </html>

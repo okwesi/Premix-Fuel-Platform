@@ -1,10 +1,493 @@
 {% extends "header.html" %}
 
 {% block content %}
+<style>
+    #welcome {
+        margin-bottom: 60px;
+        box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+        background: linear-gradient(180deg, rgba(240, 234, 234, 1) 0%, rgba(225, 245, 242, 1) 25%);
+    }
 
+    .w-100 {
+        width: 100px;
+        height: 100px;
+    }
+
+    video {
+        position: absolute;
+        top: 50;
+        left: 0;
+        width: 100%;
+        height: 95vh;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center;
+        object-position: center;
+    }
+
+    .overlay {
+        min-height: 85vh;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+
+    .overlay h1 {
+        color: white;
+        font-weight: 600;
+        font-size: 60px;
+        margin: 2rem 3rem 0;
+        mix-blend-mode: color-dodge;
+        padding: 5px 15px;
+        text-align: center;
+    }
+
+    .fade-in {
+        animation: fadeIn 2s;
+        opacity: 1;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .reveal {
+        position: relative;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: 1s all ease;
+    }
+
+    .reveal.active {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    #myBtn {
+        display: none;
+        position: fixed;
+        bottom: 5px;
+        right: 5px;
+        z-index: 99;
+        font-size: 15px;
+        border: none;
+        outline: none;
+        color: white;
+        cursor: pointer;
+        padding: 15px;
+      }
+      
+      #myBtn:hover {
+        background-color: #555;
+      }
+</style>
 <main role="main">
+    <video playsinline autoplay muted loop>
+        <source src="https://fiske.elementor.design-lt.com//wp-content//uploads//2021//08//Fishing-44530.mp4"
+            type="video/mp4">
+        <!-- <source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video"> -->
+        Your browser does not support the video tag. I suggest you upgrade your browser.
+    </video>
 
-    <div id="myCarousel" class="carousel slide mb-5" data-ride="carousel">
+    <div class="overlay">
+        <h1>PREMIX FUEL GHANA</h1>
+    </div>
+
+
+
+    <div class="container marketing">
+
+        <div class="card reveal" id="welcome">
+            <div class="card-body" style="text-align:center">
+                <h2 class="card-title">Welcome To Our Website</h2>
+                <p class="card-text">We love giving new visitors the chance to know more about us. <br> Don't Have an
+                    Account? See how to <a href="{% url 'join' %}" class="btn btn-dark rounded-pill px-4">Join Us</a>
+                </p>
+            </div>
+        </div>
+        <!-- Three columns of text below the carousel -->
+        <div class="row text-center reveal" style="align-items:center;">
+            <div class="col-lg-4">
+                <img class="rounded-"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/MAVIS_HAWA_KOOMSON.jpg/450px-MAVIS_HAWA_KOOMSON.jpg"
+                    alt="Generic placeholder image" width="240" height="240">
+                <h5>HON. MRS. MAVIS HAWA KOOMSON</h5>
+                <p>MINISTER FOR FISHERIES AND AQUACULTURE DEVELOPMENT</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="rounded-"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Moses_Anim.jpg/220px-Moses_Anim.jpg"
+                    alt="Generic placeholder image" width="240" height="240">
+                <h5>HON. MOSES ANIM</h5>
+                <p>Deputy Minister for Fisheries and Aquaculture Development (MoFAD)</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="rounded-"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKK7L5_RZkG4yz4wHycPG468xwuiavx0tmwqi_9wp7&s"
+                    alt="Generic placeholder image" width="240" height="240">
+                <h5>KWESI ARMO-HIMBSON</h5>
+                <p>CHIEF DIRECTOR </p>
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+
+
+        <!-- START THE FEATURETTES -->
+
+        <hr class="featurette-divider reveal">
+
+        <div class="row featurette reveal">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Addressing Challenges in Premix Fuel</h2>
+                <p class="lead text-justify">Government subsidized the product to make it cheap and accessible to
+                    artisanal fishermen
+                    in the coastal and lake regions of the country.
+
+                    Majority of Ghanaians who live along the coast are fishermen and engage in the fishing business,
+                    therefore, depriving them of the premix fuel is as good as starving them and their dependents.
+
+                    Ever since the product was introduced into the fishing industry, its distribution has always been
+                    fraught with issues of corruption, diversions and smuggling to neighbouring destinations, which
+                    defeated the rationale of the subsidy and made the commodity costly to fishermen.
+                    <a
+                        href="https://newsghana.com.gh/addressing-challenges-in-premix-smuggling-perspectives-from-stakeholders/">Read
+                        More...</a>
+                </p>
+            </div>
+            <div class="col-md-5">
+                <div class="ratio ratio-16x9">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/BRU8mMiAIAE"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <hr class="featurette-divider reveal">
+
+        <div class="row featurette reveal">
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading">PREMIX Fuel Distribution To Go Digital
+                </h2>
+                <p class="lead text-justify">Vice President Dr Mahamudu Bawumia has noted that premix fuel meant for
+                    fishermen are being diverted to retailers by unscrupulous persons as a result of the heavy subsidies
+                    on the fuel.
+                    Dr Bawumia said the issue of premix fuel diversions has been a major concern to the government over
+                    the years.
+                    He has therefore asked the Minister of Fisheries and Aquaculture, Mavis Hawa Koomson to deal with
+                    the issue immediately.
+                    <a
+                        href="https://www.ghanaweb.com/GhanaHomePage/business/Heavy-subsidies-on-premix-fuel-an-incentive-for-diversion-Bawumia-1226149">
+                        Read More ....
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-5 order-md-1">
+                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500"
+                    style="width: 500px; height: 400px;"
+                    src="https://cdn.ghanaweb.com/imagelib/pics/337/33796087.295.jpg" data-holder-rendered="true">
+            </div>
+        </div>
+
+        <hr class="featurette-divider reveal">
+
+        <div class="row featurette reveal">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Fuel Distribution Is Being Bigitized By The PREMIX Secretariat.</h2>
+                <p class="lead">The National Premix Fuel Secretariat (NPFS) has launched a digitisation drive to
+                    increase transparency and prevent leaks in the premix fuel trade.
+                    According to the Chairman of the National Premix Committee, Nii Lante Bannerman, only fishermen with
+                    electronic cards will be able to access the product under the new drive.
+                    He stated that the measure was put in place to ensure that the heavily subsidized product was not
+                    diverted to other uses.
+                    The digitisation <a
+                        href="https://www.graphic.com.gh/news/general-news/ghana-news-premix-secretariat-digitises-fuel-distribution.html">Read
+                        more...</a></p>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500"
+                    style="width: 500px; height: 400px;"
+                    src="https://www.graphic.com.gh/images/2020/sept/18/Fuel_distribution.png"
+                    data-holder-rendered="true">
+            </div>
+        </div>
+
+
+        <!-- /END THE FEATURETTES -->
+
+    </div><!-- /.container -->
+
+    <section class="container-fluid mt-4 col-lg-8 col-12 col-md-10 reveal">
+
+        <!--Section heading-->
+        <h2 class="h1-responsive font-weight-bold text-center my-4 ">Contact us</h2>
+        <!--Section description-->
+        <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us
+            directly. Our team will come back to you within
+            a matter of hours to help you.</p>
+
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-9 mb-md-0 mb-5 p-4" style="border-radius: 9px;
+            background: #ffffff;
+            box-shadow:  35px 35px 70px #d6d6d6,
+                         -35px -35px 70px #ffffff;">
+                <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+
+                    <!--Grid row-->
+                    <div class="row">
+
+                        <!--Grid column-->
+                        <div class="col-md-6">
+                            <div class="md-form mb-0">
+                                <input type="text" id="name" name="name" class="form-control">
+                                <label for="name" class="">Your name</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-md-6">
+                            <div class="md-form mb-0">
+                                <input type="text" id="email" name="email" class="form-control">
+                                <label for="email" class="">Your email</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                    </div>
+                    <!--Grid row-->
+
+                    <!--Grid row-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="md-form mb-0">
+                                <input type="text" id="subject" name="subject" class="form-control">
+                                <label for="subject" class="">Subject</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Grid row-->
+
+                    <!--Grid row-->
+                    <div class="row">
+
+                        <!--Grid column-->
+                        <div class="col-md-12">
+
+                            <div class="md-form">
+                                <textarea type="text" id="message" name="message" rows="2"
+                                    class="form-control md-textarea"></textarea>
+                                <label for="message">Your message</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--Grid row-->
+
+                </form>
+
+                <div class="text-center text-md-left">
+                    <a class="btn btn-dark">Send</a>
+                </div>
+                <div class="status"></div>
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-3 text-center">
+                <ul class="list-unstyled mb-0">
+                    <li><i class="fas fa-map-marker-alt fa-2x"></i>
+                        <p>Tema, Opposite Office</p>
+                    </li>
+
+                    <li><i class="fas fa-phone mt-4 fa-2x"></i>
+                        <p>+233 245 865 2225</p>
+                    </li>
+
+                    <li><i class="fas fa-envelope mt-4 fa-2x"></i>
+                        <p>ofice@gmail.com</p>
+                    </li>
+                </ul>
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+    </section>
+    <button
+    class="btn btn-primary rounded-circle"
+   onclick="topFunction()" id="myBtn" title="Go to top"
+   ><i class="bi bi-arrow-up"></i>
+  </button>
+    <footer class="text-center text-white mt-5" style="background-color: #313233;">
+        <!-- Grid container -->
+
+        <!-- Section: Social media -->
+        <section class="mb-4">
+            <!-- Facebook -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#!" role="button"
+                data-mdb-ripple-color="dark"><i class="bi bi-facebook"></i></a>
+
+            <!-- Twitter -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#!" role="button"
+                data-mdb-ripple-color="dark"><i class="bi bi-twitter"></i></a>
+
+            <!-- Google -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#!" role="button"
+                data-mdb-ripple-color="dark"><i class="bi bi-google"></i></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#!" role="button"
+                data-mdb-ripple-color="dark"><i class="bi bi-instagram"></i></a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#!" role="button"
+                data-mdb-ripple-color="dark"><i class="bi bi-linkedin"></i></a>
+            <!-- Github -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#!" role="button"
+                data-mdb-ripple-color="dark"><i class="bi bi-tiktok"></i></a>
+        </section>
+        <!-- Section: Social media -->
+        <div class="container p-4">
+            <!-- Section: Images -->
+            <section class="">
+                <div class="row">
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://www.ghanabusinessnews.com/wp-content/uploads/2021/10/Premix-fuel.jpg"
+                                class="w-100" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://www.graphic.com.gh/images/2021/sept/16/premix.png" class="w-100"
+                                width="200" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://cdn.ghanaweb.com/imagelib/pics/755/75542041.295.jpg" class="w-100" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://cdn.ghanaweb.com/imagelib/pics/539/53996584.jpg" class="w-100" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://www.energyghana.com/wp-content/uploads/2019/09/RS24390_QZ8A2528-3.jpg"
+                                class="w-100" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                        <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
+                            <img src="https://www.graphic.com.gh/images/2020/sept/18/Fuel_distribution.png"
+                                class="w-100" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Images -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright:
+            <a class="text-white" href="#">Premix Ghana</a>
+        </div>
+
+        <!-- Copyright -->
+    </footer>
+
+</main>
+
+<script>
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            var elementVisible = 150;
+
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add("active");
+            } else {
+                reveals[i].classList.remove("active");
+            }
+        }
+    }
+
+    window.addEventListener("scroll", reveal);
+</script>
+
+<script>
+    //Get the button
+    var mybutton = document.getElementById("myBtn");
+    
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+    
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+    
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+    </script>
+{% endblock content %}
+<!-- <div id="pc-header" class="bg-image pt-5  text-center shadow-1-strong rounded mb- text-white" style="background-image:linear-gradient(to bottom, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 0%),  url('https://fiske.elementor.design-lt.com//wp-content//uploads//2021//08//Fishing-44530.mp4'); background-repeat: no-repeat;      background-size: 100%;
+    height:90vh; width: 100%; ">
+      <div class="">
+        <img src="https://uenr.edu.gh/humputsu/2021/01/uenr-logo-websites-new.png" class="align-items-centr justif-content-center" width="300" alt="">
+        <p class="">
+          "The only thing that you absolutely have to know, is the location of the library.
+        </p>
+      </div>
+    </div> -->
+
+<!-- <div id="myCarousel" class="carousel slide mb-5" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class=""></li>
             <li data-target="#myCarousel" data-slide-to="1" class=""></li>
@@ -49,7 +532,7 @@
                         <h1>LAUNCHING OF THE OACPS
                         </h1>
                         <p>AT THE ACCRA INTERNATIONAL CONFERENCE CENTER
-
+  
                         </p>
                     </div>
                 </div>
@@ -63,115 +546,10 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-    </div>
+    </div> -->
 
 
-    <!-- Marketing messaging and featurettes
+<!-- Marketing messaging and featurettes
     ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-
-    <div class="container marketing">
-
-        <!-- Three columns of text below the carousel -->
-        <div class="row">
-            <div class="col-lg-4">
-                <img class="rounded-" src="https://www.mofad.gov.gh/wp-content/uploads/2022/03/Mofad-Min.jpg"
-                    alt="Generic placeholder image" width="240" height="240">
-                <h5>HON. MRS. MAVIS HAWA KOOMSON</h5>
-                <p>MINISTER FOR FISHERIES AND AQUACULTURE DEVELOPMENT</p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <img class="rounded-" src="https://www.mofad.gov.gh/wp-content/uploads/2022/02/Dep-Min.jpg"
-                    alt="Generic placeholder image" width="240" height="240">
-                <h5>HON. MOSES ANIM</h5>
-                <p>Deputy Minister for Fisheries and Aquaculture Development (MoFAD)</p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <img class="rounded-" src="https://www.mofad.gov.gh/wp-content/uploads/2018/06/rsz_armo_1.jpg"
-                    alt="Generic placeholder image" width="240" height="240">
-                <h5>KWESI ARMO-HIMBSON</h5>
-                <p>CHIEF DIRECTOR </p>
-            </div><!-- /.col-lg-4 -->
-        </div><!-- /.row -->
-
-
-        <!-- START THE FEATURETTES -->
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">Addressing Challenges in Premix Fuel</h2>
-                <p class="lead text-justify">Government subsidized the product to make it cheap and accessible to artisanal fishermen
-                    in the coastal and lake regions of the country.
-
-                    Majority of Ghanaians who live along the coast are fishermen and engage in the fishing business,
-                    therefore, depriving them of the premix fuel is as good as starving them and their dependents.
-
-                    Ever since the product was introduced into the fishing industry, its distribution has always been
-                    fraught with issues of corruption, diversions and smuggling to neighbouring destinations, which
-                    defeated the rationale of the subsidy and made the commodity costly to fishermen.
-                <a href="https://newsghana.com.gh/addressing-challenges-in-premix-smuggling-perspectives-from-stakeholders/">Read More...</a></p>
-            </div>
-            <div class="col-md-5">
-                <div class="ratio ratio-16x9">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/BRU8mMiAIAE"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading">PREMIX FUEL DISTIBUTION TO GO DIGITAL
-                </h2>
-                <p class="lead text-justify">Vice President Dr Mahamudu Bawumia has noted that premix fuel meant for
-                    fishermen are being diverted to retailers by unscrupulous persons as a result of the heavy subsidies
-                    on the fuel.
-                    Dr Bawumia said the issue of premix fuel diversions has been a major concern to the government over
-                    the years.
-                    He has therefore asked the Minister of Fisheries and Aquaculture, Mavis Hawa Koomson to deal with
-                    the issue immediately.
-                    <a
-                        href="https://www.ghanaweb.com/GhanaHomePage/business/Heavy-subsidies-on-premix-fuel-an-incentive-for-diversion-Bawumia-1226149">
-                        Read More ....
-                    </a>
-                </p>
-            </div>
-            <div class="col-md-5 order-md-1">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500"
-                    style="width: 500px; height: 400px;"
-                    src="https://cdn.ghanaweb.com/imagelib/pics/337/33796087.295.jpg" data-holder-rendered="true">
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
-                    euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
-                    tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500"
-                    style="width: 500px; height: 400px;"
-                    src="https://energynewsafrica.com/wp-content/uploads/2019/11/prar.png" data-holder-rendered="true">
-            </div>
-        </div>
-
-
-        <!-- /END THE FEATURETTES -->
-
-    </div><!-- /.container -->
-
-
-
-</main>
-
-{% endblock content %}
+<!-- Wrap the rest of the page in another container to center all the content. -->
+<!-- src="https://fiske.elementor.design-lt.com//wp-content//uploads//2021//08//Fishing-44530.mp4" -->

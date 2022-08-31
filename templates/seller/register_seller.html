@@ -10,20 +10,125 @@ Register Buyer
 
 
 {% block content %}
-<div class="container col-lg-6 mb-3 mt-5">
-  <div class=" text-center p-3" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+<div class="container col-lg-8 mb-3 mt-5">
+  <div class=" text-center p-3" style="
+  border-radius: 10px;
+  background: #fffefe;
+  box-shadow: 15px 15px 30px #bebebe,
+              -15px -15px 30px #ffffff;">
 
     <form method="Post" enctype="multipart/form-data">
       {% csrf_token %}
-      {{form}}
+      <div id="Div1">
+        <h2>Operator Details</h2>
+
+        <div class="row mb-4">
+          <div class="col">
+            <div class="form-outline">
+              {{form.username}}
+              <label class="form-label" for="id_username">Username</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-outline">
+              {{form.email}}
+              <label class="form-label" for="id_email">Email</label>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col">
+            <div class="form-outline">
+              {{form.first_name}}
+              <label class="form-label" for="id_first_name">First name</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-outline">
+              {{form.last_name}}
+              <label class="form-label" for="id_last_name">Last name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col">
+            <div class="form-outline">
+              {{form.profile_picture}}
+              <label class="form-label" for="customFile">Passport Picture</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-outline">
+              <img id="blah"
+                src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png"
+                class="img-fluid " width="200" height="200" />
+            </div>
+          </div>
+        </div>
+
+        <div class="text-end">
+          <a href="#" class="btn btn-dark rounded-pill align-content-end text-end" onclick="divVisibility('Div2');"><i
+              class="bi bi-arrow-right-square-fill"></i> Next</a>
+        </div>
+      </div>
+      <div id="Div2" style="display: none;">
+        <h2>Station Details</h2>
+        <div class="form-outline">
+          {{form.name}}
+          <label class="form-label" for="id_name">Station Name</label>
+        </div>
+        <div class="row mb-4">
+          <div class="col">
+            <div class="form-outline">
+              {{form.address}}
+              <label class="form-label" for="id_address">Address</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-outline">
+              {{form.phone}}
+              <label class="form-label" for="id_phone">Phone</label>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <p>Station Geolocation</p>
+          <div class="col">
+            <div class="form-outline">
+              {{form.geolocation_longitude}}
+              <label class="form-label" for="id_geolocation_longitude">Longitude</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-outline">
+              {{form.geolocation_latitude}}
+              <label class="form-label" for="id_geolocation_latitude">Latitude</label>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4 mb-4">
+          <div class="col">
+            <!-- <a href="#" class="align-items-start" onclick="divVisibility('Div1');">Div1</a> -->
+            <div class="text-start">
+              <a href="#" class="btn btn-dark rounded-pill align-content-end text-end"
+                onclick="divVisibility('Div1');"><i class="bi bi-arrow-left-square-fill"></i> Prev</a>
+            </div>
+          </div>
+          <div class="col ">
+            <div class="text-end">
+              <button type="submit" 
+                class=" btn btn-dark btn-block rounded-pill">Register</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Submit button -->
-      <button type="submit" class="btn btn-dark btn-block m-4 col-7 rounded-pill">Register</button>
 
 
     </form>
-    <!-- <video id="webcam" autoplay playsinline width="640" height="480"></video>
-<canvas id="canvas" class="d-none"></canvas>
-<audio id="snapSound" src="audio/snap.wav" preload = "auto"></audio> -->
+
+
   </div>
 </div>
 
@@ -32,28 +137,41 @@ Register Buyer
 
 {% block script %}
 <script>
-  seller_id = document.getElementById("id_username")
-  seller_id.value = "{{seller_id}}"
+  document.getElementById("id_profile_picture").classList.add("form-control")
+</script>
+<script>
+
+  id_profile_picture.onchange = evt => {
+    const [file] = id_profile_picture.files
+    if (file) {
+      blah.style.display = ""
+      blah.src = URL.createObjectURL(file)
+    }
+  }
+</script>
+<script>
+  var divs = ["Div1", "Div2",];
+  var visibleDivId = null;
+  function divVisibility(divId) {
+    if (visibleDivId === divId) {
+      visibleDivId = null;
+    } else {
+      visibleDivId = divId;
+    }
+    hideNonVisibleDivs();
+  }
+  function hideNonVisibleDivs() {
+    var i, divId, div;
+    for (i = 0; i < divs.length; i++) {
+      divId = divs[i];
+      div = document.getElementById(divId);
+      if (visibleDivId === divId) {
+        div.style.display = "block";
+      } else {
+        div.style.display = "none";
+      }
+    }
+  }
 </script>
 
-<!-- <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
-<script>
-const webcamElement = document.getElementById('webcam');
-const canvasElement = document.getElementById('canvas');
-const snapSoundElement = document.getElementById('snapSound');
-const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
-webcam.start()
-   .then(result =>{
-      console.log("webcam started");
-   })
-   .catch(err => {
-       console.log(err);
-   });
-   let picture = webcam.snap();
-document.querySelector('#download-photo').href = picture;
-$('#cameraFlip').click(function() {
-    webcam.flip();
-    webcam.start();  
-});
-</script> -->
 {% endblock script %}

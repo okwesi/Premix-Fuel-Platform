@@ -4,7 +4,7 @@ from django.db import models
 class Orders(models.Model):
     order_id = models.CharField(max_length=50, unique=True)
     quantity = models.CharField(max_length=10)
-    price = models.CharField(max_length=10)
+    price = models.FloatField(max_length=10)
     received = models.BooleanField(default=False)
     delivered = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
@@ -17,3 +17,4 @@ class Orders(models.Model):
     
 class Price(models.Model):
     price = models.CharField(max_length=10)
+    time_created = models.DateTimeField(auto_now=True, auto_now_add=False)

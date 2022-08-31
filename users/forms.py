@@ -17,6 +17,7 @@ class RegisterBuyerForm(forms.ModelForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'phone', "profile_picture")
 
 class RegisterSellerForm(forms.ModelForm):
+    username= forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(widget= forms.EmailInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
@@ -24,7 +25,7 @@ class RegisterSellerForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
     address = forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
     phone = forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
-    quantity = forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
+    # quantity = forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
     geolocation_longitude = forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
     geolocation_latitude = forms.CharField(max_length=100, widget= forms.TextInput(attrs={'class': 'form-control'}))
 
@@ -34,7 +35,7 @@ class RegisterSellerForm(forms.ModelForm):
         fields = ('username', 'first_name',
                   'last_name', 'email', 'phone',
                   "profile_picture", "name", 
-                  'address', 'phone', 'quantity',
+                  'address', 'phone',
                   "geolocation_longitude", "geolocation_latitude",
                   )
 

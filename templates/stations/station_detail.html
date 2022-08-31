@@ -15,27 +15,48 @@
 
 {% block content %}
 {% if user.is_superuser %}
-  
-<a href="{% url 'update-station' station.id %}" class="btn btn-dark rounded-pill   col-3" >
+{% if messages %}
+<div class="messages text-center">
+    {% for message in messages %}
+    <div {% if message.tags %} id="message" class="{{ message.tags }} col-lg-6" {% endif %}>{{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<a href="{% url 'update-station' station.id %}" class="btn btn-dark rounded-pill col-3 mb-3" >
   Update Station
 </a>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-dark rounded-pill col-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Update Quantity
+</button>
+
+
 {% endif %}
-<div class="container col-lg-10 mb-3">
-    <div class="row">
-        <div class="bg-image hover-overlay ripple col-lg-4" data-mdb-ripple-color="light">
+<div class="container col-lg-10 mb-3 mt-2 border border-dark">
+    <div class="row ">
+        <div class="bg-image hover-overlay ripple col-lg-4 " data-mdb-ripple-color="light">
             <img src="{{station.seller.profile_picture.url}}" class="img-fluid img" />
         </div>
-        <div class=" text-center col-lg-8" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
+        <div class=" text-start col-lg-8" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
             <div class="card-body">
                 <table class="table">
                     <tbody>
                  
+                      {% if user.is_staff %}
+                        <td ><h3>Total Sales This Month:</h3></td>
+                        
+                        <td ><b><h3>GHs {% for sale in sales %} {% if sale.total_amount %}{{sale.total_amount}}{% else %}0{% endif %}{% endfor %}</h3></b></td>
+                      {% endif %}
                       <tr>
-                        <td >Name:</td>
+                        <td >Station Name:</td>
                         <td ><b>{{station.name}}</b></td>
                       </tr>
                       <tr>
-                        <td >Quantity:</td>
+                        <td > Fuel Quantity:</td>
                         <td ><b>{{station.quantity}}</b></td>
                       </tr>
                       <tr>
@@ -47,7 +68,7 @@
                         <td ><b>{{station.seller.user.username}}</b></td>
                       </tr>
                       <tr>
-                        <td >Attendant:</td>
+                        <td >Operator:</td>
                         <td ><b>{{station.seller.user.first_name}} {{station.seller.user.last_name}}</b></td>
                       </tr>
                       <tr>
@@ -61,42 +82,126 @@
                     </tbody>
                   </table>
             </div>
-            <div id='map'></div>
+            <div id='map' style="margin-bottom: 50px;"></div>
 
-            <div>
-              
-                <!-- <h3 class="text-center">Orders</h3>
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      
-                    </tbody>
-                  </table> -->
-            </div>
+            
         </div>
+        
+      </div>
     </div>
-</div>
+
+    {% if user.is_superuser or user.is_staff %}
+    <div class="container">
+    <nav>
+      <div class="nav nav-tabs  nav-justified mb-3" id="nav-tab" role="tablist">
+        <button class="nav-link active " id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Orders</button>
+        <button class="nav-link " id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Quantity</button>
+      </div>
+    </nav>
+
+    <div class="tab-content " id="nav-tabContent" style="overflow-y:scroll; height:85vh;">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <table class="table container ">
+          <thead>
+            <tr>
+              <th scope="col">Order Id</th>
+              <th scope="col">quantity</th>
+              <th scope="col">Price</th>
+              <th scope="col">Received</th>
+              <th scope="col">Delivered</th>
+              <th scope="col">Paid</th>
+              <th scope="col">Ordered Time</th>
+              <th scope="col">Delivered Time</th>
+              <th scope="col">Received Time</th>
+              <th scope="col">Station </th>
+              <th scope="col">Customer</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders  %}              
+            <tr>
+              <td>{{order.order_id}}</td>
+              <td>{{order.quantity}}</td>
+              <td>{{order.price}}</td>
+              <td>{{order.received}}</td>
+              <td>{{order.delivered}}</td>
+              <td>{{order.paid}}</td>
+              <td>{{order.ordered_time}}</td>
+              <td>{{order.delivered_time}}</td>
+              <td>{{order.received_time}}</td>
+              <td>{{order.station.name}}</td>
+              <td>{{order.customer.user.username}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <table class="table container ">
+          <thead>
+            <tr>
+              <th scope="col">Quantity</th>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>              
+              <th scope="col">Time Since</th>              
+            </tr>
+          </thead>
+          <tbody>
+            {% for quantity in fuelquantity  %}              
+            <tr>
+              <td>{{quantity.quantity}}</td>
+              <td>{{quantity.time_updated | date}}</td>
+              <td>{{quantity.time_updated | time}}</td>
+              <td>{{quantity.time_updated | timesince}}</td>
+              
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endif %}
 <style>
   #map {
     width: 100%;
     height: 300px;
   }
 </style>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'update-quanity' station.id %}" method="post">
+          {% csrf_token %}
+          <div class="input-group">
+            <div class="input-group-text">Quantity</div>
+            <input type="text" class="form-control" placeholder="" name="quantity" id="quantity" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-dark rounded-pill">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
 
 
 {% block script %}
+<script>
+  setTimeout(function () {
+    document.getElementById('message').style.display = "none";
+  }, 4000);
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 

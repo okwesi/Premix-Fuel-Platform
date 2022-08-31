@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('delivered', models.BooleanField(default=False)),
                 ('paid', models.BooleanField(default=False)),
                 ('ordered_time', models.DateTimeField(auto_now_add=True)),
-                ('delivered_time', models.DateTimeField(auto_now_add=True)),
+                ('d1elivered_time', models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.CreateModel(

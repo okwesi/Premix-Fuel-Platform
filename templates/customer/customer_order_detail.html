@@ -3,24 +3,36 @@
 {% block content %}
 
 <div class="container">
-<h2>Customer Order {{order.order_id}}</h2>
-  <!-- price Card -->
-  <div class="card p-2">
-    <div class="row">
-      <div class="col-8">Premix Fuel Price</div>
-      <div class="col-4">Gh₵ <b style='color:green' id="price">{{price.price}}</b> &#8593; </div>
+  {% if messages %}
+<div class="messages text-center">
+    {% for message in messages %}
+    <div {% if message.tags %} id="message" class="{{ message.tags }} col-lg-6" {% endif %}>{{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
+    {% endfor %}
+</div>
+{% endif %}
+<!-- price Card -->
+<div class="card p-2">
+  <div class="row">
+    <div class="col-8">Premix Fuel Price</div>
+    <div class="col-4">Gh₵ <b style='color:green' id="price">{{price.price}}</b> &#8593; </div>
   </div>
+</div>
 </div>
 
 
 <div class="container col-lg-6 mb-3 mt-5">
+  <h3>Customer Order Receipt {{order.order_id}}</h3>
   <div class=" text-center p-3" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
 
 
     <!-- 2 column grid layout with text inputs for  the first and last names -->
+    <h4>Order Details</h4>
     <div class="card mb-3">
-    <table class="table table-sm align-middle mb-0 bg-white">
+      <table class="table table-sm align-middle mb-0 bg-white">
         <tbody>
           <tr>
             <td>
@@ -32,7 +44,7 @@
           </tr>
           <tr>
             <td>
-              <p class="text-muted mb-0">Quantity</p>
+              <p class="text-muted mb-0">quantity</p>
             </td>
             <td>
               <p class="fw-normal mb-1">{{order.quantity}}</p>
@@ -62,62 +74,72 @@
               <p class="fw-normal mb-1">{{order.ordered_time}}</p>
             </td>
           </tr>
+          <tr>
+            <td>
+              <p class="text-muted mb-0">Paid</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{order.paid}}</p>
+            </td>
+          </tr>
 
         </tbody>
       </table>
-</div>
-    <div class="card mt-3 mb-3">
+    </div>
+
+    <h4>Station Details</h4>
+    <div class="card mb-3" style="max-width: 700px; ">
       <div class="row">
         <div class="col-5">
-          <img src="{{order.station.seller.profile_picture.url}}" style="height: 100%;" alt="{{order.station.name}}"
-            class="img-fluid rounded-start">
-    
+          <img src="{{order.station.seller.profile_picture.url}}" class="rounded-start" width="200" height="200" />
         </div>
         <div class="col-7">
           <div class="card-body">
-            <h5 class="card-title">{{order.station.name}}</h5>
+            <h5 class="card-title">Station Name: {{order.station.name}}</h5>
             <p class="card-text">
-              {{order.station.address}}
+              Address: {{order.station.address}}
             </p>
             <p class="card-text">
-              {{order.station.seller.user.username}}
+              <small class="text-muted">Operator Name: {{order.station.seller.user.first_name|title}}
+                {{order.station.seller.user.last_name|title}}</small>
             </p>
           </div>
-          <a href="{% url 'station-detail' order.station.id %}" class="stretched-link"></a>
         </div>
       </div>
+      <a href="{% url 'station-detail' order.station.id order.station.name%}" class="btn btn-dark">View Details</a>
+
     </div>
 
     <!-- Checkbox -->
     {% if order.delivered %}
-      {% if not order.received %}
-        
-      <button type="button" class="btn btn-dark btn-block m-4 col-7 rounded-pill" data-bs-toggle="modal"
+    {% if not order.received %}
+
+    <button type="button" class="btn btn-dark btn-block m-4 col-7 rounded-pill" data-bs-toggle="modal"
       data-bs-target="#exampleModal">
       Received?
     </button>
-      {% endif %}
+    {% endif %}
     {% endif %}
     <!-- Submit button -->
   </div>
-  </div>
+</div>
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Recieved Fuel</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">Are you sure?</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">No</button>
-          <a href="{% url 'received' order.order_id %}" class="btn btn-success">Yes</a>
-        </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Recieved Fuel</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">Are you sure?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">No</button>
+        <a href="{% url 'received' order.order_id %}" class="btn btn-success">Yes</a>
       </div>
     </div>
-{% endblock content %}
-{% block script %}
+  </div>
+  {% endblock content %}
+  {% block script %}
 
-{% endblock script %}
+  {% endblock script %}

@@ -1,6 +1,8 @@
-import profile
-from tokenize import group
+
+import json
 from django.contrib.auth.views import PasswordChangeView
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, authenticate #add this
@@ -12,10 +14,11 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from orders.models import Orders
+from orders.views import received
 from stations.models import Station
 from users.forms import EditUserForms, PasswordChangeForms, PictureForms, RegisterBuyerForm, RegisterSellerForm
 from users.models import Customer, Seller
-from django.utils.encoding import force_bytes, force_text  
+from django.utils.encoding import force_bytes, force_str  
 from django.core.mail import EmailMessage, send_mail 
  
 # # Create your views here.
@@ -26,21 +29,17 @@ def open_dashboard(request):
     stations = Station.objects.all()
     customers = User.objects.filter(groups__name__in=['customer'])
     sellers = User.objects.filter(groups__name__in=['seller'])
-    stations_count = stations.count()
-    customers_count = customers.count()
-    orders = Orders.objects.all()
-    orders_count = orders.count()
+    customers_list = json.dumps(list(customers.values("username", "id", )))
+    sellers_list = list(sellers)
+    orders = Orders.objects.filter(paid=True, delivered=True, received=True)
     context = {
         "stations": stations,
         'customers': customers,
         'sellers': sellers,
-        'stations_count': stations_count,
-        'customers_count': customers_count,
-        'orders_count': orders_count,
+        'customers_list': customers_list,
+        'sellers_list': sellers_list,
         "orders" : orders
     }
-    for order in orders:
-        print(order.order_id)
 
     return render(request, 'admin/dashboard.html', context)
    
@@ -56,7 +55,6 @@ def register_customer(request):
     if request.method == 'POST':
         form = RegisterBuyerForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form)
             #save form in the memory not in database
             password = User.objects.make_random_password()
             user = form.save(commit=False)                        
@@ -103,7 +101,6 @@ def register_seller(request):
     if request.method == 'POST':
         form = RegisterSellerForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form)
             #save form in the memory not in database
             password = User.objects.make_random_password()
             user = form.save(commit=False)                        
@@ -118,16 +115,14 @@ def register_seller(request):
                 profile_picture = request.FILES['profile_picture']
                 )
             
-            Station.objects.create(
+            station = Station.objects.create(
 				seller = seller,
 				name = form.cleaned_data.get('name'),
 				address = form.cleaned_data.get('address'),
 				phone = form.cleaned_data.get('phone'),
-				quantity = form.cleaned_data.get('quantity'),
 				geolocation_latitude = form.cleaned_data.get('geolocation_latitude'),
 				geolocation_longitude = form.cleaned_data.get('geolocation_longitude')
 			)
-
             current_site = get_current_site(request)  
             mail_subject = 'Activation link has been sent to your email id'  
             message = render_to_string('users/acc_active_email.html', {  
@@ -145,7 +140,8 @@ def register_seller(request):
                         mail_subject, message, to=[to_email]  
             )  
             email.send()   
-            return redirect('home')
+            return HttpResponseRedirect(reverse('station-detail', kwargs={'id': station.id, 'name':station.name}))
+
     else:
         seller_id = "SR-" + generate_random_numbers()  
         form = RegisterSellerForm() 
@@ -179,7 +175,8 @@ def login_buyer(request):
 
 def customer_detail(request, customer_id):
     customer = User.objects.get(id=customer_id)
-    return render(request, 'customer/customer_detail.html', {'customer': customer})
+    orders = Orders.objects.filter(customer_id=int(customer.customer.id))
+    return render(request, 'customer/customer_detail.html', {'customer': customer, 'orders':orders})
     
 def update_customer(request, customer_id):
     user = User.objects.get(id=customer_id)
@@ -192,7 +189,8 @@ def update_customer(request, customer_id):
         if user_forms.is_valid() and customer_forms.is_valid:
             user_forms.save()            
             customer_forms.save()
-            return redirect('admin-dashboard')
+            return HttpResponseRedirect(reverse('customer-detail', kwargs={'customer_id': customer_id}))
+
 
     
     

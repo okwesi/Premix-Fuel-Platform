@@ -26,7 +26,6 @@
             <div class="card-body">
                 <table class="table">
                     <tbody>
-                 
                       <tr>
                         <td >Name:</td>
                         <td ><b>{{customer.first_name}} {{customer.last_name}}</b></td>
@@ -62,7 +61,42 @@
                     </tbody>
                   </table> -->
             </div>
-        </div>
+            
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Order Id</th>
+                <th scope="col">quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Received</th>
+                <th scope="col">Delivered</th>
+                <th scope="col">Paid</th>
+                <th scope="col">Ordered Time</th>
+                <th scope="col">Delivered Time</th>
+                <th scope="col">Received Time</th>
+                <th scope="col">Station </th>
+                <th scope="col">Customer</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders  %}              
+              <tr>
+                <td>{{order.order_id}}</td>
+                <td>{{order.quantity}}</td>
+                <td>{{order.price}}</td>
+                <td>{{order.received}}</td>
+                <td>{{order.delivered}}</td>
+                <td>{{order.paid}}</td>
+                <td>{{order.ordered_time}}</td>
+                <td>{{order.delivered_time}}</td>
+                <td>{{order.received_time}}</td>
+                <td>{{order.station.name}}</td>
+                <td>{{order.customer.user.username}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
     </div>
 </div>
 

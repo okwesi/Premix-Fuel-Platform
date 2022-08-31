@@ -25,10 +25,15 @@ def contact(request):
     return render(request, 'contact.html')
 
 
+def join(request):
+    return render(request, 'join.html')
+
+
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin-panel"),
     re_path(r'^$', home, name='home'),
     path('contact/', contact, name='contact'),
+    path('join/', join, name='join'),
     path('users/', include("users.urls")),
     path('station/', include("stations.urls")),
     path('orders/', include("orders.urls")),

@@ -2,9 +2,13 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
+from django.contrib import messages
 from orders.forms import OrderForm
 from stations.models import Station
 from .models import Orders, Price
+from pypaystack import Transaction, Customer, Plan
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 # Create your views here.
 
 #get all orders
@@ -44,12 +48,13 @@ def search_order(request):
 # user orders
 def customer_orders(request):
     orders = Orders.objects.filter(customer=request.user.customer, paid=True).order_by("-ordered_time")
-    price = Price.objects.all().first()
+    price = Price.objects.all().order_by("-time_created").first()
     return render(request, 'customer/customer_orders.html', {'orders': orders, 'price': price})
 
 def customer_order_detail(request, order_id):
     order = Orders.objects.get(order_id=order_id)
-    price = Price.objects.all().first()
+    price = Price.objects.all().order_by("-time_created").first()
+
     return render(request, 'customer/customer_order_detail.html', {'order': order, 'price': price})
 
 
@@ -73,7 +78,7 @@ def seller_order_detail(request, order_id):
 
 def order_oil(request, station_id):    
     order_form = OrderForm()
-    price = Price.objects.all().first()
+    price = Price.objects.all().order_by("-time_created").first()
     station = Station.objects.get(id=station_id)
     full_name = request.user.first_name + " " + request.user.last_name
     get_initials(fullname=full_name)
@@ -117,20 +122,26 @@ def generate_random_numbers():
 
 def pay(request, order_id):
     order = Orders.objects.get(order_id=order_id)
-    price = Price.objects.all().first()
+    price = Price.objects.all().order_by("-time_created").first()
+
     return render(request, 'customer/pay.html', {'order': order, 'price': price})
 
-def paid(request, order_id):
+def paid(request, order_id, reference_id):
     order = Orders.objects.get(order_id=order_id)
     station = Station.objects.get(id=order.station.id)
-    print(station.quantity)
-    print(order.quantity)
-    # quantity = str(station.quantity)
-    station.quantity = int(station.quantity) - int(order.quantity)
-    station.save()
-    order.paid = True
-    order.save()    
-    return redirect("order-station")
+    transaction = Transaction(authorization_key="sk_test_38b5f48935d447f62045a3a37654d63040fdc70d")
+    response  = transaction.verify(reference_id)
+    if response[3].get('status') == "success":
+        station.quantity = int(station.quantity) - int(order.quantity)
+        station.save()
+        order.paid = True
+        order.save()
+        messages.success(request, response[2], extra_tags='alert alert-success alert-dismissible fade show')
+        return HttpResponseRedirect(reverse('customer-order-detail', kwargs={'order_id': order.order_id,}))
+    else:
+        messages.success(request, response[2], extra_tags='alert alert-success alert-dismissible fade show')
+        return HttpResponseRedirect(reverse('pay', kwargs={'id': order_id,}))
+    # return redirect("order-station")
 
 def received(request, order_id):
     order = Orders.objects.get(order_id=order_id)
@@ -148,10 +159,31 @@ def delivered(request, order_id):
 
 
 def order_station(request):
-    price = Price.objects.all().first()
     stations = Station.objects.all()
+    price = Price.objects.all().order_by("-time_created").first()
+
     return render(request, 'customer/order_station.html', {'stations': stations, 'price': price})
 
+from django.views.generic import  ListView
+
+class StationListView(ListView):
+    model = Station
+    template_name = 'customer/order_station.html'
+    context_object_name = "stations"
+    paginate_by = 20
+    
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            object_list = self.model.objects.filter(name__contains=query)
+        else:
+            object_list = self.model.objects.all()
+        return object_list
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["price"] = Price.objects.all().order_by("-time_created").first()
+        return context
 
 
 
