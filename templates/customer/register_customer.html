@@ -10,16 +10,27 @@ Register Buyer
 
 
 {% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <div class="container col-lg-6 mb-3 mt-5">
   <div class=" text-center p-3" style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
 
-    <form method="Post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
+      <div class="form-outline">
+        {{form.username}}
+        <label class="form-label" for="id_username">Username</label>
+      </div>
       <div class="row mb-4">
         <div class="col">
           <div class="form-outline">
-            {{form.username}}
-            <label class="form-label" for="id_username">Username</label>
+            {{form.phone}}
+            <label class="form-label" for="id_username">Phone</label>
           </div>
         </div>
         <div class="col">

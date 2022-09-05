@@ -54,6 +54,8 @@ def register_customer(request):
     """function for creating forms to add users then sends a verification link to the email of the user"""
     if request.method == 'POST':
         form = RegisterBuyerForm(request.POST, request.FILES)
+        print("something")
+        print(form.errors)
         if form.is_valid():
             #save form in the memory not in database
             password = User.objects.make_random_password()
@@ -63,9 +65,10 @@ def register_customer(request):
             #adds a group to the user
             user_group = Group.objects.get(name='customer')
             user.groups.add(user_group)
-            
-            Customer.objects.create(
+            print("something")
+            customer = Customer.objects.create(
                 user=user,
+                phone = form.cleaned_data.get('phone'),
                 profile_picture = request.FILES['profile_picture']
                 )
 
@@ -84,10 +87,12 @@ def register_customer(request):
                         mail_subject, message, to=[to_email]  
             )  
             email.send()   
-            return redirect('home')
+            return HttpResponseRedirect(reverse('customer-detail', kwargs={'customer_id': user.id}))
+
     else:  
         form = RegisterBuyerForm() 
-    
+
+    messages.error(request, form.errors, extra_tags='alert alert-danger alert-dismissible fade show')    
     customer_id = "CR-" + generate_random_numbers()
     return render(request, 'customer/register_customer.html', {'form': form, 'customer_id': customer_id})
 
@@ -144,7 +149,8 @@ def register_seller(request):
 
     else:
         seller_id = "SR-" + generate_random_numbers()  
-        form = RegisterSellerForm() 
+        form = RegisterSellerForm()
+    messages.error(request, form.errors) 
     return render(request, 'seller/register_seller.html', {'form': form, 'seller_id': seller_id})
 
 
