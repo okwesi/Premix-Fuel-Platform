@@ -4,17 +4,7 @@
 
 <div class="container">
 
-  {% if messages %}
-  <div class="messages text-center">
-    {% for message in messages %}
-    <div {% if message.tags %} id="message" class="{{ message.tags }} col-lg-6" {% endif %}>{{ message }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    {% endfor %}
-  </div>
-  {% endif %}
+ 
   <!-- price Card -->
   <div class="card p-2">
     <div class="row">
@@ -64,6 +54,18 @@
           </td>
           <td>
             <p class="fw-normal mb-1">GHS {{order.price}}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p class="text-muted mb-0">Delivery</p>
+          </td>
+          <td>
+            {% if order.delivery %}
+            <p class="fw-normal mb-1">Yes</p>
+            {% else %}
+            <p class="fw-normal mb-1">No</p>
+            {% endif %}
           </td>
         </tr>
 

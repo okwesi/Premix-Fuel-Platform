@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 
 # Create your models here.
@@ -13,7 +14,7 @@ class Orders(models.Model):
     received_time = models.DateTimeField(null=True, blank=True)
     station = models.ForeignKey('stations.Station', on_delete=models.CASCADE)
     customer = models.ForeignKey('users.Customer', on_delete=models.CASCADE)
-    
+    delivery = models.BooleanField(default=False)
     
 class Price(models.Model):
     price = models.CharField(max_length=10)

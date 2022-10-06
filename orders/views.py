@@ -83,16 +83,18 @@ def order_oil(request, station_id):
     full_name = request.user.first_name + " " + request.user.last_name
     get_initials(fullname=full_name)
     order_id = get_initials(fullname=full_name) +"-"+ generate_random_numbers()
-    
     if request.method == 'POST':
         if order_form.is_valid:
-            
+            delivery_box = request.POST.get("box")
+            if delivery_box:
+                delivery = True
             order = Orders.objects.create(
                 order_id = order_id,
                 customer = request.user.customer,
                 station = station,
                 quantity = request.POST['quantity'],
-                price = request.POST['price'],            
+                price = request.POST['price'], 
+                delivery = delivery           
             )
            
         return redirect('pay', order_id=order.order_id)

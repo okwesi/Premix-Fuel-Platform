@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RenameField(
             model_name='station',
-            old_name='qunatity',
+            old_name='quantity',
             new_name='quantity',
         ),
         migrations.CreateModel(
