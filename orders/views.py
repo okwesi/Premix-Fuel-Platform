@@ -88,6 +88,8 @@ def order_oil(request, station_id):
             delivery_box = request.POST.get("box")
             if delivery_box:
                 delivery = True
+            else:
+                delivery = False
             order = Orders.objects.create(
                 order_id = order_id,
                 customer = request.user.customer,
